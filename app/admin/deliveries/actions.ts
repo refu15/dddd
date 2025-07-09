@@ -15,22 +15,10 @@ export const DeliverySchema = z.object({
   assigned_driver_id: z.string().uuid().optional().nullable(), // UUID for user
   assigned_vehicle_id: z.string().uuid().optional().nullable(), // UUID for vehicle
 
-  base_charge: z.preprocess(
-    (a) => parseFloat(z.string().parse(a)),
-    z.number().min(0, '基本料金は0以上である必要があります。')
-  ).optional().default(0),
-  distance_charge: z.preprocess(
-    (a) => parseFloat(z.string().parse(a)),
-    z.number().min(0, '距離料金は0以上である必要があります。')
-  ).optional().default(0),
-  weight_charge: z.preprocess(
-    (a) => parseFloat(z.string().parse(a)),
-    z.number().min(0, '重量料金は0以上である必要があります。')
-  ).optional().default(0),
-  item_count_charge: z.preprocess(
-    (a) => parseFloat(z.string().parse(a)),
-    z.number().min(0, '個数料金は0以上である必要があります。')
-  ).optional().default(0),
+  base_charge: z.coerce.number().min(0, '基本料金は0以上である必要があります。').optional().default(0),
+  distance_charge: z.coerce.number().min(0, '距離料金は0以上である必要があります。').optional().default(0),
+  weight_charge: z.coerce.number().min(0, '重量料金は0以上である必要があります。').optional().default(0),
+  item_count_charge: z.coerce.number().min(0, '個数料金は0以上である必要があります。').optional().default(0),
 
   invoice_status: z.enum(['unbilled', 'billed', 'paid']).optional().default('unbilled'),
   billed_at: z.string().optional().nullable(), // Date as string
