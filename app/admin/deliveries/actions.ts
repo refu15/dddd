@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 // Zod schema for validation
-export export const DeliverySchema = z.object({
+export const DeliverySchema = z.object({
   title: z.string().min(1, '案件名は必須です。'),
   customer_name: z.string().min(1, '顧客名は必須です。'),
   delivery_address: z.string().min(1, '配送先住所は必須です。'),
