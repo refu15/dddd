@@ -4,16 +4,19 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { SupabaseAdapter } from "@next-auth/supabase-adapter"
 import { createClient } from "@supabase/supabase-js"
 
-// 環境変数が設定されていることを確認
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY || !process.env.NEXTAUTH_SECRET) {
-  throw new Error("SupabaseまたはNextAuthの環境変数が不足しています");
+const SUPABASE_URL = process.env.SUPABASE_URL
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
+const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET
+
+if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !NEXTAUTH_SECRET) {
+  throw new Error("Missing NextAuth or Supabase environment variables (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, NEXTAUTH_SECRET).")
 }
 
 export const authOptions: NextAuthOptions = {
   // Supabaseアダプターを使用して、ユーザー、アカウント、セッションを同期
   adapter: SupabaseAdapter({
-    url: process.env.SUPABASE_URL,
-    secret: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    url: SUPABASE_URL,
+    secret: SUPABASE_SERVICE_ROLE_KEY,
   }),
 
   providers: [
@@ -30,8 +33,8 @@ export const authOptions: NextAuthOptions = {
 
         // Supabaseクライアントを作成してユーザーをサインイン
         const supabaseAdmin = createClient(
-          process.env.SUPABASE_URL!,
-          process.env.SUPABASE_SERVICE_ROLE_KEY!
+          SUPABASE_URL,
+          SUPABASE_SERVICE_ROLE_KEY
         );
 
         // Supabase Authでユーザーをサインイン
@@ -90,7 +93,7 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
 
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);
