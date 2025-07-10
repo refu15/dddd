@@ -66,7 +66,7 @@ export default function SellerDashboardPage() {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">販売者ダッシュボード</h1>
 
-      {error === '販売者情報が登録されていません。登録してください。') ? (
+      {error === '販売者情報が登録されていません。登録してください。' ? (
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>販売者情報がありません</CardTitle>
