@@ -1,9 +1,7 @@
 import { Header } from "@/app/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
-import { DeliveryForm } from "../../DeliveryForm";
-import { updateDelivery } from "../../actions";
+import { DeliveryEditForm } from "./DeliveryEditForm";
 
 export default async function EditDeliveryPage({ params }: { params: { id: string } }) {
   const supabase = await createSupabaseServerClient();
@@ -35,18 +33,7 @@ export default async function EditDeliveryPage({ params }: { params: { id: strin
     <div>
       <Header title="案件の編集" showBackButton backUrl="/admin/deliveries" />
       <main className="container mx-auto p-4">
-        <Card className="max-w-2xl mx-auto">
-          <CardHeader>
-            <CardTitle>案件情報の編集</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <DeliveryForm
-              action={updateDelivery.bind(null, delivery.id)}
-              initialData={initialData}
-              submitButtonText="変更を保存"
-            />
-          </CardContent>
-        </Card>
+        <DeliveryEditForm deliveryId={delivery.id} initialData={initialData} />
       </main>
     </div>
   );

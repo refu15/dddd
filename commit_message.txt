@@ -1,3 +1,3 @@
-fix: Remove async from EditDeliveryPage component
+fix: Re-add async to EditDeliveryPage component
 
-- Removed the `async` keyword from `EditDeliveryPage` function in `app/admin/deliveries/[id]/edit/page.tsx` to resolve potential "use server" related build errors.
+- Re-added the `async` keyword to `EditDeliveryPage` function in `app/admin/deliveries/[id]/edit/page.tsx` to allow `await` usage for Supabase client initialization.
