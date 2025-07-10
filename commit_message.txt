@@ -1,4 +1,3 @@
-fix: Resolve Vercel deployment errors
+fix: Remove async from EditDeliveryPage component
 
-- Migrate Supabase client from `@supabase/auth-helpers-nextjs` to `@supabase/ssr`.
-- Fix JSX syntax errors in `app/seller/dashboard/page.tsx` and `app/auth/update-password/page.tsx`.
+- Removed the `async` keyword from `EditDeliveryPage` function in `app/admin/deliveries/[id]/edit/page.tsx` to resolve potential "use server" related build errors.

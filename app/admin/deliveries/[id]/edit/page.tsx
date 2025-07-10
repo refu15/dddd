@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { DeliveryForm } from "../../DeliveryForm";
 import { updateDelivery } from "../../actions";
 
-export default function EditDeliveryPage({ params }: { params: { id: string } }) {
+export default async function EditDeliveryPage({ params }: { params: { id: string } }) {
   const supabase = await createSupabaseServerClient();
   const { data: delivery, error } = await supabase
     .from("deliveries")
