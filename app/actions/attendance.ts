@@ -27,7 +27,7 @@ const LocationSchema = z.object({
 
 export async function checkIn(locationData: z.infer<typeof LocationSchema>) {
   const userId = await getUserId()
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const validatedLocation = LocationSchema.safeParse(locationData)
   if (!validatedLocation.success) {
@@ -53,7 +53,7 @@ export async function checkIn(locationData: z.infer<typeof LocationSchema>) {
 
 export async function checkOut(locationData: z.infer<typeof LocationSchema>) {
   const userId = await getUserId()
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const validatedLocation = LocationSchema.safeParse(locationData)
   if (!validatedLocation.success) {
@@ -79,7 +79,7 @@ export async function checkOut(locationData: z.infer<typeof LocationSchema>) {
 
 export async function requestDirectGo(locationData: z.infer<typeof LocationSchema>, notes: string) {
   const userId = await getUserId()
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const validatedLocation = LocationSchema.safeParse(locationData)
   if (!validatedLocation.success) {
@@ -108,7 +108,7 @@ export async function requestDirectGo(locationData: z.infer<typeof LocationSchem
 
 export async function requestDirectReturn(locationData: z.infer<typeof LocationSchema>, notes: string) {
   const userId = await getUserId()
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const validatedLocation = LocationSchema.safeParse(locationData)
   if (!validatedLocation.success) {

@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: '無効な位置情報データです' }, { status: 400 })
   }
 
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const { error } = await supabase.from('locations').insert({
     user_id: session.user.id,

@@ -42,7 +42,7 @@ const formatStatus = (status: string) => {
 };
 
 export default async function VehiclesPage() {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: vehicles, error } = await supabase
     .from("vehicles")
     .select("*")

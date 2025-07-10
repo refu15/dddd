@@ -59,7 +59,7 @@ const formatInvoiceStatus = (status: string) => {
 };
 
 export default async function DeliveriesPage() {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: deliveries, error } = await supabase
     .from("deliveries")
     .select(

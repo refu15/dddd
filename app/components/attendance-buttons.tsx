@@ -33,7 +33,7 @@ interface LocationData {
 
 export function AttendanceButtons() {
   const { data: session } = useSession()
-  const [isCheckedIn, setIsCheckedIn] = useState(false)
+  const [attendanceStatus, setAttendanceStatus] = useState<'never-checked-in' | 'check_in' | 'check_out' | 'direct_go' | 'direct_return'>('never-checked-in')
   const [isPending, startTransition] = useTransition()
   const [isDirectGoDialogOpen, setIsDirectGoDialogOpen] = useState(false)
   const [isDirectReturnDialogOpen, setIsDirectReturnDialogOpen] = useState(false)
@@ -51,16 +51,18 @@ export function AttendanceButtons() {
         .select('attendance_type')
         .eq('user_id', session.user.id)
         .order('recorded_at', { ascending: false })
-        .limit(1)
+        .maybeSingle()
 
       if (error) {
         console.error('Error fetching last attendance:', error)
         return
       }
 
-      if (data && data.length > 0) {
-        const lastType = data[0].attendance_type
-        setIsCheckedIn(lastType === 'check_in' || lastType === 'direct_go')
+      if (data) {
+        const lastType = data.attendance_type
+        setAttendanceStatus(lastType)
+      } else {
+        setAttendanceStatus('never-checked-in')
       }
     }
 
@@ -104,7 +106,7 @@ export function AttendanceButtons() {
 
         if (result?.message) {
           toast.success(result.message)
-          setIsCheckedIn(type === 'in')
+          setAttendanceStatus(type === 'in' ? 'check_in' : 'check_out')
         } else {
           toast.error('操作に失敗しました。')
         }
@@ -135,7 +137,7 @@ export function AttendanceButtons() {
           setIsDirectGoDialogOpen(false)
           setIsDirectReturnDialogOpen(false)
           setNotes('')
-          setIsCheckedIn(type === 'go') // 直行の場合は出勤状態にする
+          setAttendanceStatus(type === 'go' ? 'direct_go' : 'direct_return') // 直行の場合は出勤状態にする
         } else {
           toast.error('申請に失敗しました。')
         }
@@ -148,7 +150,7 @@ export function AttendanceButtons() {
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
-        {!isCheckedIn ? (
+        {attendanceStatus === 'check_out' || attendanceStatus === 'never-checked-in' || attendanceStatus === 'direct_return' ? (
           <Button
             className="h-14 w-full text-lg bg-white border-2 border-[#1C3D5A] text-[#1C3D5A] hover:bg-gray-50"
             onClick={() => handleAttendance('in')}
@@ -167,7 +169,7 @@ export function AttendanceButtons() {
             退勤
           </Button>
         )}
-        {!isCheckedIn ? (
+        {attendanceStatus === 'check_out' || attendanceStatus === 'never-checked-in' || attendanceStatus === 'direct_return' ? (
           <Button
             className="h-14 w-full text-lg bg-white border-2 border-gray-400 text-gray-700 hover:bg-gray-50"
             onClick={() => setIsDirectGoDialogOpen(true)}

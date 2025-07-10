@@ -44,7 +44,7 @@ export default async function AttendanceLogPage() {
     redirect('/login');
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: attendances, error } = await supabase
     .from('attendances')
     .select('*')

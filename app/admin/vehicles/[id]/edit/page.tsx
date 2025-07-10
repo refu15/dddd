@@ -6,7 +6,7 @@ import { VehicleForm } from "../../VehicleForm";
 import { updateVehicle } from "../../actions";
 
 export default async function EditVehiclePage({ params }: { params: { id: string } }) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: vehicle, error } = await supabase
     .from("vehicles")
     .select("*")

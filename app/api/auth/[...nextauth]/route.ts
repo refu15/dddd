@@ -1,7 +1,6 @@
 
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { SupabaseAdapter } from "@next-auth/supabase-adapter"
 import { createClient } from "@supabase/supabase-js"
 
 const SUPABASE_URL = process.env.SUPABASE_URL
@@ -13,12 +12,6 @@ if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !NEXTAUTH_SECRET) {
 }
 
 export const authOptions: NextAuthOptions = {
-  // Supabaseアダプターを使用して、ユーザー、アカウント、セッションを同期
-  adapter: SupabaseAdapter({
-    url: SUPABASE_URL,
-    secret: SUPABASE_SERVICE_ROLE_KEY,
-  }),
-
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -58,7 +51,7 @@ export const authOptions: NextAuthOptions = {
           .from("users")
           .select("*")
           .eq("id", userData.user.id)
-          .single();
+          .maybeSingle();
 
         if (userError) {
           console.error("Error fetching user profile:", userError.message);
@@ -73,13 +66,19 @@ export const authOptions: NextAuthOptions = {
 
   // セッションに役割(role)を永続化するためのコールバック
   callbacks: {
-    async session({ session, user }) {
-      // `user`オブジェクトは`authorize`コールバックまたはアダプターから返されたもの
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        // @ts-ignore
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
       if (session.user) {
+        session.user.id = token.id as string;
         // @ts-ignore
-        session.user.id = user.id;
-        // @ts-ignore
-        session.user.role = user.role;
+        session.user.role = token.role;
       }
       return session;
     },

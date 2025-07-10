@@ -66,6 +66,13 @@ export default function LoginPage() {
             <Button type="submit" className="w-full">
               ログイン
             </Button>
+            <div className="text-center text-sm mt-4">
+              <a href="/forgot-password" className="text-blue-600 hover:underline">パスワードを忘れた場合</a>
+            </div>
+            <div className="text-center text-sm mt-2">
+              アカウントをお持ちでないですか？{' '}
+              <a href="/signup" className="text-blue-600 hover:underline">新規登録</a>
+            </div>
           </form>
         </CardContent>
       </Card>

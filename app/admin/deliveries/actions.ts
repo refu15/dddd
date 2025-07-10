@@ -28,7 +28,7 @@ export const DeliverySchema = z.object({
 })
 
 export async function addDelivery(formData: FormData) {
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const validatedFields = DeliverySchema.safeParse({
     title: formData.get('title'),
@@ -76,7 +76,7 @@ export async function addDelivery(formData: FormData) {
 }
 
 export async function updateDelivery(id: string, formData: FormData) {
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const validatedFields = DeliverySchema.safeParse({
     title: formData.get('title'),
@@ -126,7 +126,7 @@ export async function updateDelivery(id: string, formData: FormData) {
 }
 
 export async function deleteDelivery(id: string) {
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const { error } = await supabase
     .from('deliveries')
@@ -145,7 +145,7 @@ export async function deleteDelivery(id: string) {
 }
 
 export async function updateInvoiceStatus(id: string, newStatus: 'unbilled' | 'billed' | 'paid') {
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const { error } = await supabase
     .from('deliveries')

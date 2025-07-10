@@ -6,7 +6,7 @@ import { DeliveryForm } from "../../DeliveryForm";
 import { updateDelivery } from "../../actions";
 
 export default async function EditDeliveryPage({ params }: { params: { id: string } }) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: delivery, error } = await supabase
     .from("deliveries")
     .select("*")

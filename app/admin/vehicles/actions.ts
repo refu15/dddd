@@ -17,7 +17,7 @@ export const VehicleSchema = z.object({
 })
 
 export async function addVehicle(formData: FormData) {
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const validatedFields = VehicleSchema.safeParse({
     name: formData.get('name'),
@@ -60,7 +60,7 @@ export async function addVehicle(formData: FormData) {
 }
 
 export async function updateVehicle(id: string, formData: FormData) {
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const validatedFields = VehicleSchema.safeParse({
     name: formData.get('name'),
@@ -100,7 +100,7 @@ export async function updateVehicle(id: string, formData: FormData) {
 }
 
 export async function deleteVehicle(id: string) {
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
 
   const { error } = await supabase
     .from('vehicles')
