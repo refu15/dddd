@@ -1,11 +1,4 @@
-feat: Implement Next.js 15 compatibility and new features
+fix: Resolve Vercel deployment errors
 
-Refactor:
-- Update Supabase client initialization to handle async `cookies()` in Next.js 15.
-- Adjust `fetchLastAttendance` to correctly handle null data using `maybeSingle()`.
-
-New Features:
-- Add password reset functionality.
-- Implement user signup flow.
-- Introduce product management for sellers (listing, adding, editing, deleting products).
-- Implement seller profile management (creation and editing).
+- Migrate Supabase client from `@supabase/auth-helpers-nextjs` to `@supabase/ssr`.
+- Fix JSX syntax errors in `app/seller/dashboard/page.tsx` and `app/auth/update-password/page.tsx`.
