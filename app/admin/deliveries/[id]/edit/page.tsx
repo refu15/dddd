@@ -3,8 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DeliveryEditForm } from "./DeliveryEditForm";
 
-export default async function EditDeliveryPage({ params }: { params: { id: string } }) {
-  const supabase = await createSupabaseServerClient();
+export default function EditDeliveryPage({ params }: { params: { id: string } }) {
+  const supabase = createSupabaseServerClient();
   const { data: delivery, error } = await supabase
     .from("deliveries")
     .select("*")

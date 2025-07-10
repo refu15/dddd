@@ -1,3 +1,3 @@
-fix: Re-add async to EditDeliveryPage component
+feat: Separate DeliveryEditForm into client component
 
-- Re-added the `async` keyword to `EditDeliveryPage` function in `app/admin/deliveries/[id]/edit/page.tsx` to allow `await` usage for Supabase client initialization.
+- Extracted the delivery edit form into a new client component (`DeliveryEditForm.tsx`) to resolve "use server" related build errors in the page component.
