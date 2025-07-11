@@ -1,3 +1,4 @@
-feat: Separate DeliveryEditForm into client component
+fix: restore async fetch and import path for delivery edit page
 
-- Extracted the delivery edit form into a new client component (`DeliveryEditForm.tsx`) to resolve "use server" related build errors in the page component.
+- Update DeliveryEditForm import path to reference deliveries folder
+- Reintroduce async server client creation and notFound handling in EditDeliveryPage
