@@ -11,7 +11,7 @@ const nextConfig = {
   },
 }
 
-console.log("NEXTAUTH_SECRET in next.config.mjs:", process.env.NEXTAUTH_SECRET);
+
 
 
 export default nextConfig

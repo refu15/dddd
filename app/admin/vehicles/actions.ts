@@ -3,18 +3,7 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { z } from 'zod'
-
-// Zodを使用して、入力データのバリデーションスキーマを定義
-export const VehicleSchema = z.object({
-  name: z.string().min(1, '車両名は必須です。'),
-  license_plate: z.string().optional(),
-  status: z.enum(['available', 'in_use', 'maintenance']),
-  // 日付は文字列として受け取り、後で変換
-  inspection_due_date: z.string().optional().nullable(),
-  last_maintenance_date: z.string().optional().nullable(),
-  notes: z.string().optional(),
-})
+import { VehicleSchema } from './schema'
 
 export async function addVehicle(formData: FormData) {
   const supabase = await createSupabaseServerClient()
