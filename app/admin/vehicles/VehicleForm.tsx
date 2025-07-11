@@ -7,7 +7,7 @@ import { useFormStatus } from "react-dom"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { VehicleSchema } from "./actions"
+import { VehicleSchema } from "./schema"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
