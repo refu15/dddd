@@ -23,7 +23,13 @@ export const createSupabaseServerClient = async () => {
           cookieStore.set({ name, value, ...options })
         },
         remove(name: string, options: CookieOptions) {
-          cookieStore.set({ name, value: '', ...options })
+          // Explicitly expire the cookie to ensure it is removed
+          cookieStore.set({
+            name,
+            value: '',
+            ...options,
+            expires: new Date(0),
+          })
         },
       },
     }
